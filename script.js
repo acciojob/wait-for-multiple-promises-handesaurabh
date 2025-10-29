@@ -2,6 +2,7 @@
 const output = document.getElementById("output");
 
 const loadingRow = document.createElement("tr");
+loadingRow.id = "loading";
 const loadingCell = document.createElement("td");
 loadingCell.colSpan = 2;
 loadingCell.textContent = "Loading...";
@@ -21,15 +22,12 @@ const startTime = performance.now();
 Promise.all(promises).then(results => {
   const endTime = performance.now();
   const totalTime = ((endTime - startTime) / 1000).toFixed(3);
-
   output.innerHTML = "";
-
   results.forEach(result => {
     const row = document.createElement("tr");
     row.innerHTML = `<td>Promise ${result.promiseNum}</td><td>${result.delay}</td>`;
     output.appendChild(row);
   });
-
   const totalRow = document.createElement("tr");
   const maxDelay = Math.max(...results.map(r => parseFloat(r.delay))).toFixed(3);
   totalRow.innerHTML = `<td><strong>Total</strong></td><td><strong>${maxDelay}</strong></td>`;
